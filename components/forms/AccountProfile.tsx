@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel,  } from "@/components/ui/form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { UserValidation } from "@/lib/validations/user";
 import { Input } from "../ui/input";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 import * as z from 'Zod';
 import { ChangeEvent, useState } from "react";
+import { isBase64Image } from "@/lib/utils";
 
 interface Props{
 
@@ -27,6 +28,7 @@ interface Props{
 const AccountProfile=({user , btnTitle}: Props)=>{
 
   const [files,setFiles]= useState<File[]>([])
+  
     const form= useForm({
         resolver:zodResolver(UserValidation),
         defaultValues:{
@@ -51,10 +53,16 @@ const AccountProfile=({user , btnTitle}: Props)=>{
         fileReader.readAsDataURL(file)
       }
     }
-    function onSubmit(values: z.infer<typeof UserValidation>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof UserValidation>) =>{
+      const blob=values.profile_photo;
+      const hasImageChanged = isBase64Image(blob);
+      if(hasImageChanged){
+        const imgRes= await startUpload(files)
+        if(imgRes && imgRes[0].fileUrl ){
+          values.profile_photo= imgRes[0].fileUrl
+        }
+
+      }
       }
     return(
     <div className="text-light-2">
@@ -195,3 +203,7 @@ export default AccountProfile;
 function usestate(): [any, any] {
   throw new Error("Function not implemented.");
 }
+function startUpload(files: File[]) {
+  throw new Error("Function not implemented.");
+}
+
