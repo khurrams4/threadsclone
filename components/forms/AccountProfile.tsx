@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel,  } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel,FormMessage,  } from "@/components/ui/form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import { UserValidation } from "@/lib/validations/user";
 import { Input } from "../ui/input";
@@ -127,6 +127,7 @@ const AccountProfile=({user , btnTitle}: Props)=>{
                 
                 />
               </FormControl>
+              <FormMessage/>
               
             </FormItem>
 
@@ -152,6 +153,7 @@ const AccountProfile=({user , btnTitle}: Props)=>{
                 
                 />
               </FormControl>
+              <FormMessage/>
               
             </FormItem>
 
@@ -176,7 +178,7 @@ const AccountProfile=({user , btnTitle}: Props)=>{
                 
                 />
               </FormControl>
-              
+              <FormMessage/>
             </FormItem>
 
             
@@ -200,6 +202,7 @@ const AccountProfile=({user , btnTitle}: Props)=>{
                 
                 />
               </FormControl>
+              <FormMessage/>
               
             </FormItem>
 
