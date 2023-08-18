@@ -3,6 +3,7 @@
 import { connectToDB } from "../mongoose"
 import User from "../models/user.model";
 import { revalidatePath } from "next/cache";
+import Thread from "../models/thread.model";
 
 interface Params{
     text:string,
@@ -15,41 +16,44 @@ export async function createThread({
     author,
     communityId,
     path,
-}:Params) : Promise<void>{
-    connectToDB();
-   try {
-    await User.findOneAndUpdate(
-        {id:userId},
-        {
-            username:username.toLowerCase(),
-            name,
-            bio,
-            image,
-            onboarded:true
-        },
-        {upsert:true,}
-    );
-    if(path==='/profile/edit'){
-        revalidatePath(path);
-    }
-    
-   } catch (error:any) {
-    throw new Error(`failed to create/update user:${error.message}`);
-   }
-}
-
-export async function fetchUser(userId: string) {
-
+}:Params) {
     try {
         connectToDB();
-        return await User.findOne({id:userId})
-        // .populate({
-        //     path:'communities',
-        //     model : Community
-        //})
+        const createdThread = await Thread.create({
+            text,
+            author,
+            community: null,
+        })
+         await User.findByIdAndUpdate(author,{$push:{threads:createdThread._id}})   
+         revalidatePath(path);
         
     } catch (error:any) {
-        throw new Error(`failed to fetch user:${error.message}`);
-        
+        throw new Error (`error creating thread${error.message}`)
     }
 }
+
+export async function fetchPosts( pageNumber = 1 , pageSize = 20){
+    connectToDB();
+
+    const skipAmount = (pageNumber -1)* pageSize;
+    const postsQuery = Thread.find({parentId:{$in:[null,undefined]}})
+          .sort({creatAt:'desc'})
+          .skip(skipAmount)
+          .limit(pageSize)
+          .populate({path:'author', model:User})
+          .populate({
+            path:'children',
+            populate:{
+                path:'author',
+                model: User,
+                select: "id name parentId image"
+            }
+
+          })
+
+          const totalPostsCount = await Thread.countDocuments({parentId : {$in: [null,undefined]}})
+          const posts= await postsQuery.exec();
+          const isNext = totalPostsCount > skipAmount + posts.length;
+
+          return {posts , isNext}
+} 
