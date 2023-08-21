@@ -69,7 +69,7 @@ const Threadcard =({
                             </div>
                             {isComment && comments.length >0 && ( <Link href={`/thread/${id}`}> 
                             
-                            <p</Link>)}
+                            </Link>)}
                         </div>
                         </div>
                 </div>
