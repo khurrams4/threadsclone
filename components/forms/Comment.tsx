@@ -1,4 +1,12 @@
-const Comment = ()=>{
+interface Props{
+
+    threadId: string ;
+    currentuserImg:string;
+    cuucurrentUserId:string;
+
+}
+
+const Comment = ({ threadId , currentuserImg, cuucurrentUserId}: Props)=>{
 
     return(
        <div>

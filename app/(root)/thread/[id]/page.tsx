@@ -31,7 +31,11 @@ return (
             
         </div>
         <div className="mt-7">
-            <Comment/>
+            <Comment
+             threadId ={thread.id}
+             currentuserImg = {user.imageUrl}
+             cuucurrentUserId={JSON.stringify(userInfo._id)}
+            />
 
         </div>
     </section>
