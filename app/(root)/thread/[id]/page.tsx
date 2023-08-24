@@ -27,13 +27,14 @@ return (
                       community={thread.community}
                       createdAt={thread.createdAt}
                       comments={thread.children}
+                      isComment
                       />
             
         </div>
         <div className="mt-7">
             <Comment
              threadId ={thread.id}
-             currentuserImg = {user.imageUrl}
+             currentuserImg = {userInfo.image}
              currentUserId={JSON.stringify(userInfo._id)}
             />
 

@@ -23,7 +23,7 @@ interface Props{
             image:string;
         };
     }[];
-    isCommen?:boolean;
+    isComment?:boolean;
 }
 const Threadcard =({
 
