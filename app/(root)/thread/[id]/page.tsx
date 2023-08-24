@@ -34,7 +34,7 @@ return (
             <Comment
              threadId ={thread.id}
              currentuserImg = {user.imageUrl}
-             cuucurrentUserId={JSON.stringify(userInfo._id)}
+             currentUserId={JSON.stringify(userInfo._id)}
             />
 
         </div>
