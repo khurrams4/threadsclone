@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "@/components/ui/textarea"
 
-import * as z from "zod";
+import { z } from "zod";
 import { ChangeEvent, useState } from "react";
 import { isBase64Image } from "@/lib/utils";
 import { updateUser } from "@/lib/actions/user.actions";
