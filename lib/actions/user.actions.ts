@@ -124,3 +124,29 @@ export async function fetchUsers({ userId , searchString="" , pageNumber=1 , pag
         
     }
 }
+
+export async function getActivity( userId:string){
+
+try {
+    connectToDB();
+    //find all threads created by user
+    const userThreads = await Thread.find({author: userId});
+
+    // collect all the child threads id :(replies) from the 'children' field
+    const childThreadsIds = userThreads.reduce((acc, userThread)=> {return acc.concat(userThread.children)} ,[])
+    const replies = await Thread.find({ 
+        _id:{$in:childThreadsIds},
+        author:{$ne: userId}
+     }).populate({
+        path:'author',
+        model:User,
+        select:'name image _id'
+     })
+
+  return replies;
+
+      } catch (error : any) {
+        throw new Error(`Error fetching activity: ${error.message}`);
+    
+    }
+}
