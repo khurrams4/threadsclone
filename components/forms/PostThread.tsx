@@ -43,16 +43,19 @@ function PostThread({userId}:{userId:string}) {
         }
     })
 
-
     const onSubmit = async (values:z.infer<typeof Threadvalidation>) => {
-      
-
+          
         await createThread
-        ({
+        (
+          {
            text: values.thread,
            author:userId,
-           communityId:organization? organization.id: null,
-           path:pathName,});
+           communityId: organization!.id ?? '',
+           communityName: organization?.name ?? '',
+           path:pathName,
+           communityImgUrl:organization?.imageUrl ?? ''
+          }
+          );
            router.push("/")
        }
       

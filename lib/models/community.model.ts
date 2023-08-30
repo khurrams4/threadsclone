@@ -22,5 +22,5 @@ members:[{
 
 });
 
- const Community = mongoose.models.User || mongoose.model('User' , communitySchema);
+ const Community = mongoose.models.Community || mongoose.model('Community' , communitySchema);
  export default  Community;

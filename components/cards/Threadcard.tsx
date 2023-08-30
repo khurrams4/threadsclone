@@ -2,6 +2,7 @@ import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
+
 interface Props{
 
     id : string;
@@ -17,7 +18,7 @@ interface Props{
         id:string;
         name:string;
         image:string;
-    } |null;
+    } ;
     createdAt:string;
     comments:{
         author:{
@@ -40,6 +41,8 @@ const Threadcard =({
 
 
 }:Props)=>{
+
+    
     return(
     
         <article className="flex w-full flex-col rounded-xl bg-dark-2 p-7">
@@ -84,7 +87,7 @@ const Threadcard =({
                 {!isComment && community && (
                     <Link href={`/communities/${community.id}`} className="mt-5 flex items-center">
                         <p className="text-subtle-medium text-gray-1">
-                            {formatDateString(createdAt)} - {community.name} Community
+                            {formatDateString(createdAt)} - {"  "}{community.name} Community
                         </p>
                         <Image 
                             src={community.image}
