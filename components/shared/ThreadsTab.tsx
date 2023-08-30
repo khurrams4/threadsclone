@@ -1,4 +1,4 @@
-import { fetchUserPost } from "@/lib/actions/user.actions";
+import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import Threadcard from "../cards/Threadcard";
 
@@ -13,7 +13,7 @@ interface Props
     
 const ThreadsTab=async ({currentUserId , accountId, accountType,} : Props)=>{
 
-            let result = await fetchUserPost(accountId);
+            let result = await fetchUserPosts(accountId);
             if(!result) redirect('/');
 
     return (
