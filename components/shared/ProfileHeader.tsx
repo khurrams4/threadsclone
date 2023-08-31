@@ -1,14 +1,16 @@
 import Image from "next/image";
 
 interface Props {
-    accountId :string , 
-    authUserId:string , 
-    name :string , 
-    username :string ,
-     imageUrl :string ,
-     bio :string,
+    accountId :string; 
+    authUserId:string;
+    name :string ;
+    username :string;
+     imageUrl :string;
+     bio :string;
+     type?: 'User' | 'Community';
+     
 }
-const ProfileHeader =({accountId , authUserId , name , username , imageUrl , bio}:Props)=>{
+const ProfileHeader =({accountId , authUserId , name , username , imageUrl,type, bio}:Props)=>{
     return (
         <div className="flex w-full flex-col justify-start">
            <div className="flex items-center justify-between">
