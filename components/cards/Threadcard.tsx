@@ -41,7 +41,6 @@ const Threadcard =({
 
 
 }:Props)=>{
-
     
     return(
     
@@ -83,7 +82,7 @@ const Threadcard =({
                     {/* TODO: delete thread */}
                     {/* TODO: show comments logo */}
             </div>
-                    
+   
                 {!isComment && community && (
                     <Link href={`/communities/${community.id}`} className="mt-5 flex items-center">
                         <p className="text-subtle-medium text-gray-1">

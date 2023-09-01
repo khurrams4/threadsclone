@@ -8,14 +8,16 @@ interface Props
     currentUserId: string;
     accountId:string;
     accountType:string;
+    
 }
 
 
     
-const ThreadsTab=async ({currentUserId , accountId, accountType,} : Props)=>{
+const ThreadsTab=async ({currentUserId , accountId, accountType, } : Props)=>{
              let result:any;
              if(accountType=== 'Community'){
                 result = await fetchCommunityPosts(accountId)
+                
              }else {
                  result = await fetchUserPosts(accountId);
              }
@@ -33,8 +35,8 @@ const ThreadsTab=async ({currentUserId , accountId, accountType,} : Props)=>{
             parentId={thread.parentId}
             content={thread.text}
             author={accountType ==='User'?
-                    {name:result.name , image: result.image , id:result.id}:
-                    {name:thread.author.name, image: thread.author.image , id:thread.author._id}}
+                    ({name:result.name , image: result.image , id:result.id}):
+                    ({name:thread.author.name, image: thread.author.image , id:thread.author._id})}
 
             community={thread.community}
             createdAt={thread.createdAt}

@@ -1,4 +1,4 @@
-"use client"
+
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
@@ -12,10 +12,10 @@ interface Props{
 }
 
 const UserCard = async ( {id,name,username,imgUrl,personType}: Props)=>{
-    const router = useRouter();
+   // const router = useRouter();
     return (
              <article className="user-card">
-                
+                <>
                 <div className="user-card_avatar">
                     <Image 
                     src={imgUrl}
@@ -30,9 +30,10 @@ const UserCard = async ( {id,name,username,imgUrl,personType}: Props)=>{
                     </div>
                 </div>
 
-                <Button className="user-card_btn" onClick={()=>router.push(`/profile/${id}`)}>
+                <Button className="user-card_btn" >
                     view
                 </Button>
+                </>
              </article>
            )
 }
