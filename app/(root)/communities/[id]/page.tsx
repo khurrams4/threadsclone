@@ -76,7 +76,7 @@ async function Page({params}:{params:{id:string}}){
                         <TabsContent  value="requests" className="w-full text-light-1">
                                <ThreadsTab 
                                  currentUserId= {user.id}
-                                 accountId={communityDetails.id}
+                                 accountId={communityDetails._id}
                                  accountType="Community"
                                />
 

@@ -74,6 +74,7 @@ export async function createThread({ text, author, communityId, communityName,co
         image:communityImgUrl,
         username:author,
       })
+      
     }
 
     const createdThread = await Thread.create({
