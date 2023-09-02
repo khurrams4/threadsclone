@@ -20,10 +20,10 @@ async function Page(){
     })
     return (
              <section>
-                <h1 className="head-text mb-10">     Communities Now    </h1> 
+                <h1 className="head-text ">     Communities Now    </h1> 
 
                 {/* Search Bar placed for communities */}
-                <div className="mt-14 flex flex-col gap-9">
+                <div className="mt-9 flex flex-wrap gap-4">
                     {
                      result.communities.length=== 0 ?
                        (<p className="no-result"> No users</p>):
