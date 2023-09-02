@@ -48,34 +48,23 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
+
 interface Params {
   text: string,
   author: string,
-  communityId: string,
-  communityName: string,
+  communityId: string | null,
   path: string,
-  communityImgUrl:string,
 }
 
-export async function createThread({ text, author, communityId, communityName,communityImgUrl, path }: Params
+export async function createThread({ text, author, communityId, path }: Params
 ) {
   try {
     connectToDB();
-   
-    let communityIdObject = await Community.findOne(
+
+    const communityIdObject = await Community.findOne(
       { id: communityId },
       { _id: 1 }
     );
-     //If comunity doesnot exist in database create
-    if (!communityIdObject) {
-      communityIdObject = await Community.create({
-        id: communityId,
-        name : communityName,
-        image:communityImgUrl,
-        username:author,
-      })
-      
-    }
 
     const createdThread = await Thread.create({
       text,
@@ -87,14 +76,13 @@ export async function createThread({ text, author, communityId, communityName,co
     await User.findByIdAndUpdate(author, {
       $push: { threads: createdThread._id },
     });
- 
+
     if (communityIdObject) {
       // Update Community model
       await Community.findByIdAndUpdate(communityIdObject, {
         $push: { threads: createdThread._id },
       });
     }
-    
 
     revalidatePath(path);
   } catch (error: any) {

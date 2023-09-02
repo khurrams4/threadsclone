@@ -1,35 +1,29 @@
-"use client"
+"use client";
 
 import {z}  from "zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea"
-import {zodResolver} from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
-import { usePathname , useRouter} from 'next/navigation';
-import { Threadvalidation } from "@/lib/validations/thread";
-import { createThread } from '@/lib/actions/thread.actions';
 import { useOrganization } from "@clerk/nextjs"; 
 
+import {zodResolver} from "@hookform/resolvers/zod";
+
+import { usePathname , useRouter} from 'next/navigation';
+
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage }
+ from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea"
+
+import { Button } from "../ui/button";
+
+import { Threadvalidation } from "@/lib/validations/thread";
+import { createThread } from '@/lib/actions/thread.actions';
+	   
+
 interface Props{
+		   userId:string;
+        }
 
-    user:{
-        id:string;
-        objectId:string;
-        username:string;
-        name:string;
-        bio:string;
-        image:string
-    };
-    btnTitle:string;
-}
-
-
-
-function PostThread({userId}:{userId:string}) {
-    
-
-
+function PostThread({userId}:Props) {
+					
   const router = useRouter();
   const pathName = usePathname();
   const {organization} = useOrganization();
@@ -37,27 +31,23 @@ function PostThread({userId}:{userId:string}) {
     const form= useForm({
         resolver:zodResolver(Threadvalidation),
         defaultValues:{
-            thread :'',
-            accountid:userId
-               
+            thread :"",
+            accountId:userId
         }
     })
 
     const onSubmit = async (values:z.infer<typeof Threadvalidation>) => {
           
         await createThread
-        (
-          {
-           text: values.thread,
+        ( {
+           text:values.thread,
            author:userId,
-           communityId: organization!.id ?? '',
-           communityName: organization?.name ?? '',
+           communityId:  organization? organization?.id : '',
            path:pathName,
-           communityImgUrl:organization?.imageUrl ?? ''
           }
-          );
+          )
            router.push("/")
-       }
+       };
       
        
       
@@ -67,7 +57,8 @@ function PostThread({userId}:{userId:string}) {
     <Form {...form}>
     <form 
       onSubmit={form.handleSubmit(onSubmit)}
-      className=" mt-10 flex flex-col justify-start gap-10"
+      className="mt-10 flex flex-col justify-start gap-10"
+											  
       >
         <FormField
           control={form.control}
@@ -78,11 +69,7 @@ function PostThread({userId}:{userId:string}) {
                Content
               </FormLabel>
               <FormControl className=" no-focus border border-dark-4 bg-dark-3 text-light-1">
-                <Textarea 
-                        rows={15}
-                        {...field}
-                
-                />
+                <Textarea  rows={15} {...field} />
               </FormControl>
               <FormMessage/>
               
@@ -91,14 +78,13 @@ function PostThread({userId}:{userId:string}) {
             
           )}
         />
+
         <Button type="submit" className="bg-primary-500">Post Thread</Button>
+					 
+				 
       </form>
       </Form>
         )
 }
 
 export default PostThread;
-
-function creatThread() {
-    throw new Error('Function not implemented.');
-}
