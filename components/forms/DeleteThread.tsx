@@ -26,7 +26,7 @@ function DeleteThread({
     const confirmed= confirm("Are You Sure?");
     if(confirmed){
       await deleteThread(JSON.parse(threadId), pathname);
-      console.log(`thread removed by user${threadId}`)
+      
       if (!parentId || !isComment) {
         router.push("/");
       }
