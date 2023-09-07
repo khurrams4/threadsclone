@@ -22,6 +22,17 @@ function DeleteThread({
 }: Props) {
   const pathname = usePathname();
   const router = useRouter();
+  const removeThread=async () => {
+    const confirmed= confirm("Are You Sure?");
+    if(confirmed){
+      await deleteThread(JSON.parse(threadId), pathname);
+      console.log(`thread removed by user${currentUserId}`)
+      if (!parentId || !isComment) {
+        router.push("/");
+      }
+    }
+    
+  }
 
   if (currentUserId !== authorId || pathname === "/") return null;
 
@@ -29,15 +40,10 @@ function DeleteThread({
     <Image
       src='/assets/delete.svg'
       alt='delte'
-      width={18}
+      width={18}  
       height={18}
       className='cursor-pointer object-contain'
-      onClick={async () => {
-        await deleteThread(JSON.parse(threadId), pathname);
-        if (!parentId || !isComment) {
-          router.push("/");
-        }
-      }}
+      onClick={removeThread}
     />
   );
 }
